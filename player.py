@@ -4,13 +4,36 @@ from card import Card
 
 class Player:
 
-    def __init__(self,name,card):
+    def __init__(self, name, card, money):
 
+        self.bet = 0
+        self.money = money
         self.name = name
         self.hand = [card]
+        
         for i in range(len(self.hand)):
             
             self.value = self.hand[i].Value()
+
+    def makeBet(self,amt: int):
+        
+        if amt > self.money:
+            print("bet amount too large, available money: ",self.money)
+            return False 
+        else:
+            self.bet = amt 
+            self.money = self.money - amt
+            return True
+
+    def winGame(self):
+        
+        self.money += self.bet
+        self.bet = 0
+
+    def loseGame(self):
+        self.money -= self.bet
+        self.bet = 0
+
 
     def take(self,card):
 
@@ -27,12 +50,15 @@ class Player:
 
     def __str__(self):
 
-        str1 = ""
+        hand = ""
 
         for i in range(len(self.hand)):
 
-            str1 = str1 + "," + str(self.hand[i])
+            hand = hand + "," + str(self.hand[i])
 
-        player = self.name + "'s hand is: " + str1 + "\r\n" + "with a value of: " + str(self.value)
+        player = (self.name 
+                  + "'s hand is: " + hand 
+                  + "\r\nwith a value of: " + str(self.value)
+                  + "\nbet amt: " + str(self.bet))
 
         return player
