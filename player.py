@@ -1,5 +1,5 @@
 #Player.py
-
+from functools import reduce
 from card import Card
 
 class Player:
@@ -22,12 +22,15 @@ class Player:
             return False 
         else:
             self.bet = amt 
-            self.money = self.money - amt
             return True
 
-    def winGame(self):
+    def winGame(self,natural = False):
+        # 6 to 5 odds
+        if natural:
+            self.money = self.bet*1.2
+        else:
+            self.money += self.bet
         
-        self.money += self.bet
         self.bet = 0
 
     def loseGame(self):
@@ -38,7 +41,11 @@ class Player:
     def take(self,card):
 
         self.hand.append(card)
-        self.value = self.value + card.Value()
+        
+        if card.rank == 1 and self.value + card.Value() > 21:
+            self.value += 1
+        else:
+            self.value = self.value + card.Value()
 
     def getCard(self):
 
@@ -50,11 +57,7 @@ class Player:
 
     def __str__(self):
 
-        hand = ""
-
-        for i in range(len(self.hand)):
-
-            hand = hand + "," + str(self.hand[i])
+        hand = reduce(lambda a,b: a + ", " + str(b) if len(a) > 0 else a + str(b), self.hand,"")
 
         player = (self.name 
                   + "'s hand is: " + hand 

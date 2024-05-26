@@ -4,7 +4,7 @@
 # this program defines the Card class 
 
 from random import randrange
-
+import pygame as pg
 
 
 class Card:
@@ -28,7 +28,7 @@ class Card:
 
         if self.rank == 1:
 
-            self.value = 1
+            self.value = 11
 
         elif self.rank >= 11:
 
@@ -38,6 +38,41 @@ class Card:
             self.value = self.rank
 
         return self.value
+
+    def draw(self,x,y,screen):
+        
+        def conv_suit(r):
+            out = 0
+            if r == 'h':
+                out = 2
+            elif r == 'd':
+                out = 4
+            elif r == 's':
+                out = 6
+            elif r == 'c':
+                out = 8
+            return out
+        
+        def conv_rank(s):
+            out = str(s)
+            
+            if s == 1:
+                out = 'A'
+            elif s == 11:
+                out = 'J'
+            elif s == 12:
+                out = 'Q'
+            elif s == 13:
+                out = 'K'
+            return out
+            
+        surf = pg.image.load(f'images/{conv_suit(self.suit)}.{conv_rank(self.rank)}.png').convert()
+        
+        screen.blit(surf,(x,y))
+        
+        
+        
+        
 
     def __str__(self):
         """This method prints out what the card is"""
