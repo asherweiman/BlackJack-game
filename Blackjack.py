@@ -4,10 +4,11 @@
 from deck import Deck
 from card import Card
 from player import Player
+import pygame as pg
+import os 
 
-def play(name: str, starting_money: int):
-
-        
+def play(name: str, starting_money: int, screen: pg.display):
+       
     # makes a deck 
     the_deck = Deck()
 
@@ -26,6 +27,7 @@ def play(name: str, starting_money: int):
     dealer.take(the_deck.draw())
 
     # shows first dealer's card
+    
     print("the dealer has: ", dealer)
 
     player.take(the_deck.draw())
@@ -107,6 +109,12 @@ def play(name: str, starting_money: int):
 
 
 def main():
+     
+    # setup display  
+    pg.display.init()
+    
+    SCREEN_WIDTH, SCREEN_HEIGHT = 500
+    screen = pg.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
     
     action = "y"
     
@@ -115,7 +123,7 @@ def main():
     
     while action == "y":
         
-        play(name, starting_money)
+        play(name, starting_money, screen)
         action = input("Play another round? (y or n): ")
         
 main()

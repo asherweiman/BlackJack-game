@@ -1,6 +1,8 @@
 #Player.py
 from functools import reduce
 from card import Card
+import pygame as pg
+import os
 
 class Player:
 
@@ -9,7 +11,7 @@ class Player:
         self.bet = 0
         self.money = money
         self.name = name
-        self.hand = [card]
+        self.hand: list[Card] = [card]
         
         for i in range(len(self.hand)):
             
@@ -51,6 +53,12 @@ class Player:
 
         return self.hand[len(self.hand)-1]
 
+    def draw(self,x,y,screen):
+        
+        offset_x,offset_y =  pg.image.load(os.path.join('images', '2.2.png')).convert().get_size()
+        for i in range(len(self.hand)):
+            i.draw(x + offset_x * i,y,screen)    
+    
     def HandValue(self):
 
         return self.value

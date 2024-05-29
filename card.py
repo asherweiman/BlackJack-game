@@ -5,7 +5,7 @@
 
 from random import randrange
 import pygame as pg
-
+import os
 
 class Card:
     """the Card class defines a class with all the attributes of a playing card"""
@@ -66,7 +66,7 @@ class Card:
                 out = 'K'
             return out
             
-        surf = pg.image.load(f'images/{conv_suit(self.suit)}.{conv_rank(self.rank)}.png').convert()
+        surf = pg.image.load(os.path.join('images',f'{conv_suit(self.suit)}.{conv_rank(self.rank)}.png')).convert()
         
         screen.blit(surf,(x,y))
         
